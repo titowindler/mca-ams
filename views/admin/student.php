@@ -863,7 +863,7 @@
                 $('#view_student_id').val(data.student_id);
                 $('#view_student_id_number').html(data.s_id_number);
                 $('#view_student_fullname').html(data.s_first_name + ' ' + data.s_middle_name + ' ' + data.s_last_name);
-                $('#view_student_lrn_number').html(data.s_lrn_number);
+                $('#view_student_lrn_number').html('40444' + '' + data.s_lrn_number);
                 // date format
                 // var date = data.dob;
                 // var dateFormat = moment(date).format('MMMM DD YYYY');

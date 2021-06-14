@@ -21,7 +21,7 @@ $row = mysqli_fetch_assoc($result);
              <form method="POST" action="../../controllers/profile.php" id="formChangePassword">
                 <div class="card-body">
 
-                 <input type="hidden" name="studentID" value="<?php echo $adminID?>">
+                 <input type="hidden" name="studentID" value="<?php echo $studentID?>">
 
                  <div class="form-group">
                       <label for="old_password">Old Password</label>
@@ -43,7 +43,7 @@ $row = mysqli_fetch_assoc($result);
               
              
               <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-outline-primary" name="adminChangePasswordSubmit">SUBMIT</button>
+                <button type="submit" class="btn btn-outline-primary" name="studentChangePasswordSubmit">SUBMIT</button>
                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal" id="closeModal">CLOSE</button>
               </div>
           </form>

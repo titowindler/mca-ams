@@ -18,7 +18,7 @@ $row = mysqli_fetch_assoc($result);
                 <h5 class="modal-title">Change Password</h5>
               </div>
 
-             <form method="POST" action="controllers/loginTest.php" id="formChangePassword">
+             <form method="POST" action="../../controllers/profile.php" id="formChangePassword">
                 <div class="card-body">
 
                  <input type="hidden" name="adminID" value="<?php echo $adminID?>">
@@ -43,7 +43,7 @@ $row = mysqli_fetch_assoc($result);
               
              
               <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-outline-primary" name="emailChangePasswordSubmit">SUBMIT</button>
+                <button type="submit" class="btn btn-outline-primary" name="adminChangePasswordSubmit">SUBMIT</button>
                  <button type="button" class="btn btn-outline-danger" data-dismiss="modal" id="closeModal">CLOSE</button> </div>
           </form>
 

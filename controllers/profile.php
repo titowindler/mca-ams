@@ -108,7 +108,7 @@ function teacherChangePassword(){
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_row($result);
 
-    if($row[0] == $id && $row[2] == $old){
+    if($row[0] == $id && $row[3] == $old){
       $sql = "UPDATE teacher SET `password` = '$new' WHERE `teacher_id` = '$id' ";
       $result = mysqli_query($conn,$sql);
 
@@ -189,7 +189,7 @@ function studentChangePassword(){
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_row($result);
 
-    if($row[0] == $id && $row[2] == $old){
+    if($row[0] == $id && $row[3] == $old){
       $sql = "UPDATE student SET `password` = '$new' WHERE `student_id` = '$id' ";
       $result = mysqli_query($conn,$sql);
 

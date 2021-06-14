@@ -79,6 +79,10 @@ if($_SESSION['logged_in'] == '2') {
             </div> -->
           </div>
 
+           <!-- Display Alert -->
+          <?php require("menu-display-alert.php"); ?>
+        <!-- -->
+
          
           <div class="row">
 

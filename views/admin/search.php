@@ -107,7 +107,7 @@
 
       $getSearch = $_POST['s_id_number'];
 
-      $sql = "SELECT s.student_id, s.s_id_number, s.username, s.s_first_name, s.s_middle_name, s.s_last_name, s.dob, s.gender, s.email, s.contact_no, s.address, s.mother_name, s.mother_contact_no, s.father_name, s.father_contact_no, s.status, s_ay.s_school_yearID, s_ay.studentID, s_ay.s_grade_level, s_ay.student_type  
+      $sql = "SELECT s.student_id, s.s_id_number, s.s_lrn_number, s.username, s.s_first_name, s.s_middle_name, s.s_last_name, s.dob, s.gender, s.email, s.contact_no, s.address, s.mother_name, s.mother_contact_no, s.father_name, s.father_contact_no, s.status, s_ay.s_school_yearID, s_ay.studentID, s_ay.s_grade_level, s_ay.student_type  
       FROM student s
       JOIN student_ay s_ay 
       ON s.student_id = s_ay.studentID 
@@ -131,6 +131,7 @@
           $student_father_name = $row['father_name'];
           $student_father_contact = $row['father_contact_no'];
           $student_gender = $row['gender'];
+          $student_lrn = $row['s_lrn_number'];
       }
 
       if($numrows > 0) {
@@ -163,7 +164,7 @@
                     <div class="tab-content tab-bordered" id="myTab3Content">
                       <div class="tab-pane fade active show" id="home2" role="tabpanel" aria-labelledby="home-tab2">
                          <ul class="list-group list-group-flush">
-                          <li class="list-group-item"><strong>Student LRN Number:</strong> <span id="view_student_lrn_number"></span> </li>
+                          <li class="list-group-item"><strong>Student LRN Number:</strong> <span id="view_student_lrn_number">404444<?php echo $student_lrn?></span> </li>
                           <li class="list-group-item"><strong>Date of Birth:</strong> <span id="view_student_dob"><?php echo $student_dob ?></span> </li>
                           <li class="list-group-item"><strong>Gender:</strong> 
                           <?php if($student_gender == '1') { ?>

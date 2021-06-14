@@ -16,7 +16,7 @@ require("header.php");
                 </div>
 
             
-              <div class="card-header"><h3 style="color:#5673A1;padding:0px 0px;letter-spacing:2px;font-size:22px;">Account Login 123</h3><hr></div>
+              <div class="card-header"><h3 style="color:#5673A1;padding:0px 0px;letter-spacing:2px;font-size:22px;">Account Login</h3><hr></div>
                   <div class="card-body">
 
                       <div class="alert alert-danger" id="fail-alert">Incorrect Username / Password!</div>

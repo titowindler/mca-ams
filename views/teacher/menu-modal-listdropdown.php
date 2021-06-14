@@ -21,7 +21,7 @@ $row = mysqli_fetch_assoc($result);
              <form method="POST" action="../../controllers/profile.php" id="formChangePassword">
                 <div class="card-body">
 
-                 <input type="hidden" name="adminID" value="<?php echo $adminID?>">
+                 <input type="hidden" name="teacherID" value="<?php echo $teacherID?>">
 
                  <div class="form-group">
                       <label for="old_password">Old Password</label>
@@ -65,7 +65,7 @@ $row = mysqli_fetch_assoc($result);
              <form method="POST" action="../../controllers/profile.php" id="formProfile">
                 <div class="card-body">
 
-                  <input type="hidden" name="teacherID" value="<?php echo $adminID?>">
+                  <input type="hidden" name="teacherID" value="<?php echo $teacherID?>">
                  
                   <div class="form-group">
                       <label for="username">Username</label>
