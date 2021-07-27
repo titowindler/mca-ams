@@ -36,31 +36,6 @@
       </nav>
 
 
-       <nav class="navbar navbar-secondary navbar-expand-lg">
-          <div class="container">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="dashboard.php" class="nav-link"><i class="fas fa-columns"></i><span>Dashboard</span></a>
-            </li>
-               <li class="nav-item dropdown">
-                    <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-chalkboard-teacher"></i><span>View Classes</span></a>
-                    <ul class="dropdown-menu">
-                      <li class="nav-item"><a href="adviser-class.php" class="nav-link"> <span>Advisery Class</span> </a></li>
-                      <li class="nav-item"><a href="subject-teacher-class.php" class="nav-link"> <span>Subject Teacher Class</span> </a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item active">
-                    <a href="grade-class.php" class="nav-link"><i class="far fa-star"></i><span>Grades</span></a>
-                  </li>
-                    <li class="nav-item">
-                    <a href="stud-general-average.php" class="nav-link"><i class="far fa-envelope"></i><span>Student General Average</span></a>
-                  </li>
-              </ul>
-        </div>
-      </nav>
-
-
-      <!--  with calculate grade 
       <nav class="navbar navbar-secondary navbar-expand-lg">
           <div class="container">
           <ul class="navbar-nav">
@@ -74,120 +49,128 @@
                       <li class="nav-item"><a href="subject-teacher-class.php" class="nav-link"> <span>Subject Teacher Class</span> </a></li>
                     </ul>
                   </li>
-                 <li class="nav-item active dropdown">
-                    <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-star"></i><span>Grades</span></a>
-                    <ul class="dropdown-menu">
-                      <li class="nav-item"><a href="grade-class.php" class="nav-link"> <span>Add Grades</span> </a></li>
-                      <li class="nav-item active"><a href="calculate-grade-class-example.php" class="nav-link"> <span>Calculate Grades</span> </a></li>
-                    </ul>
+                  <li class="nav-item">
+                    <a href="grade-class.php" class="nav-link"><i class="far fa-star"></i><span>Grades</span></a>
+                  </li>
+                    <li class="nav-item active">
+                    <a href="stud-general-average.php" class="nav-link"><i class="far fa-envelope"></i><span>Student General Average</span></a>
                   </li>
               </ul>
         </div>
       </nav>
- -->
 
-
-
-       <!-- Main Content -->
+    <!-- Main Content -->
       <div class="main-content" style="min-height: 566px;">
         <section class="section">
           <div class="section-header">
-            <h1>View Grade Class</h1>
+            <h1>View Subject Teacher Class</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item"><a href="#">Grade Class</a></div>
-              <div class="breadcrumb-item">View Grade Class</div>
+              <div class="breadcrumb-item"><a href="#">Subject Teacher Class</a></div>
+              <div class="breadcrumb-item">View Subject Teacher Class</div>
             </div>
           </div>
 
           <div class="section-body">
-
+            
             <div class="card">
               <div class="card-header">
-                <h4>Grade Class Student List</h4>
+                 <h4>View Subject Teacher Class Schedule</h4>
                   <div class="card-header-action">
-                     <a href="grade-class.php" class="btn btn-danger btn-sm"><i class="far fa-arrow-alt-circle-left"></i> Return </a>
+                    <a href="stud-general-average.php" class="btn btn-danger btn-sm"><i class="far fa-arrow-alt-circle-left"></i> Return </a>
                   </div>
+              </div>
+
+              <?php 
+
+              // getting class id & acad year 
+              $get_gc = $_GET['gc'];
+              $getAcademicYear = $_GET['ay'];
+
+
+              $sqlGetAcademicYear = "SELECT * FROM academic_year ay 
+              WHERE ay.academic_year_id = '$getAcademicYear'
+              ";
+              $resultGetAcademicYear = mysqli_query($conn,$sqlGetAcademicYear);
+
+              while($rowGetAcademicYear = mysqli_fetch_assoc($resultGetAcademicYear)) {
+                 $academic_year  =  $rowGetAcademicYear['school_year'];
+                 $academicyearID  =  $rowGetAcademicYear['academic_year_id'];
+                 $set_acad_year  =  $rowGetAcademicYear['set_academic_year'];
+              } 
+
+              ?>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-5">
+                    <?php 
+                      if($set_acad_year == 1) {
+                    ?>
+                      <span class="badge badge-success"> Current Academic Year </span>
+                    <?php } else { ?>
+                      <span class="badge badge-danger"> Previous Academic Year </span>
+                    <?php } ?>
+                      <h4 class="text-dark">
+                       Academic Year: <?php echo $academic_year ?> 
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+          <div class="card">
+              <div class="card-header">
+                <h4>Subject Teacher Schedule</h4>
+                 
               </div>
             <div class="card-body">
                     <div class="table-responsive">
                   <table class="table table-hover table-bordered" id="table-class-student">
                     <thead class="thead-light">
                           <tr>
-                            <th>#</th>
                             <th>Student Account Number</th>
-                            <th>Student Name</th>
-                            <th>Gender</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Student Full Name</th>
+                            <th>Student General Average</th>
+                            <th>General Average Remarks</th>
                           </tr>
                         </thead>
                         <tbody>
-
                         <?php
 
-                          $getClass = $_GET['gc'];
-                          $getAcademicYear = $_GET['ay'];
+                        
 
-
-                          $sql = "SELECT * FROM class_student cstud
-                          JOIN class c
-                          ON c.class_id = cstud.cstud_classID
-                          JOIN student s 
-                          ON s.student_id = cstud.cstud_studentID
-                          JOIN academic_year ay 
-                          ON ay.academic_year_id = cstud.cstud_academicyearID
-                          WHERE cstud.cstud_academicyearID = '$getAcademicYear'
-                          AND cstud.cstud_classID = '$getClass'
-                          -- AND cstud.student_status = '1'
-                          -- ORDER BY cstud.class_subject_day AND cstud.class_subject_start DESC 
+                          $sqlGenAve = "SELECT * FROM general_average ga 
+                          JOIN student stud 
+                          ON stud.student_id = ga.general_student_id
+                          JOIN class c 
+                          ON c.class_id = ga.general_class_id
+                          JOIN academic_year ay
+                          ON ay.academic_year_id = ga.general_acadyear_id 
+                          WHERE ga.general_class_id = '$get_gc' AND
+                          ga.general_acadyear_id = '$getAcademicYear'
                           ";
 
-                          
-                          $result = mysqli_query($conn,$sql);
-    
-                          if(mysqli_num_rows($result) > 0) {
-                              $count = 1;
-                              while($row = mysqli_fetch_assoc($result)) {
+                          var_dump($sqlGenAve);
+
+                          $result = mysqli_query($conn,$sqlGenAve);
+                          while($row = mysqli_fetch_assoc($result)) {
+
+                         
                           ?>
+
                         <tr>
-                          <td><?php echo $count;?></td>
-                          <td><?php echo $row['s_id_number'] ?></td>
-                          <td><?php echo $row['s_first_name'] ?> <?php echo $row['s_last_name'] ?></td>
-                          <?php if($row['gender'] == 1) { ?>
-                            <td> Male </td>
-                          <?php } else { ?>
-                            <td> Female </td>
-                          <?php } ?>
-                          <?php if($row['student_status'] == 1) { ?>
-                            <td> <div class="badge badge-success badge-sm">Active</div> </td>
-                          <?php } else { ?>
-                            <td> <div class="badge badge-danger badge-sm">Drop</div> </td>
-                          <?php } ?>
-
-
-                        <?php if($row['student_status'] == 1) { ?>
-                          <td>
-                            <a href="view-grade-studentcard.php?stud=<?php echo $row['student_id']?>&gclass=<?php echo $row['class_id']?>" class="btn btn-success btn-sm text-white"><i class="far fa-plus-square"></i> ADD GRADE</a> 
-                            
-
-
-                            <button class="btn btn-danger btn-sm dropStudent"  id='<?php echo $row['class_student_id'] ?>'><i class="fas fa-user-slash"></i> DROP STUDENT</button>
-
-
-                           </td>
-                         <?php } else { ?>
-                          <td>
-                            <a class="btn btn-light btn-sm"><i class="far fa-plus-square"></i> ADD GRADE</a>    
-                           </td>
-                          <?php } ?>
-
+                          <td><?php echo $row['s_id_number'] ?></td>  
+                          <td></td>
+                          <td></td>
+                          <td></td>   
                         </tr>
+
+
                        <?php  
-                          $count++;
-                            }
+                             //echo "No Found";
                            }
-                           ?>
+                          
+                        ?>
 
                         </tbody>
                       </table>
@@ -210,40 +193,6 @@
   </div>
 
   <!-- Modals -->
-  <!-- Delete Subject Modal -->
-         <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="dropStudent">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Drop Student</h5>
-              </div>
-
-             <form method="POST" action="../../controllers/grade.php">
-                
-                <input type="hidden" id="drop_class_student_id" name="class_student_id">
-
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row">
-                        <h4 class="text-muted">Are you sure you want to drop this student? </h4>
-                      </div>
-                    <!-- <ul class="list-group p-1">
-                      <li class="list-group-item"><span class="lead text-dark" id="delete_subject_code"></span> - <span class="lead text-dark" id="delete_subject_name"></span></li>
-                      <li class="list-group-item"><span class="lead text-dark" id="delete_subject_description"></span></li>
-                    </ul> -->
-                    </div>
-                  </div>
-                
-              <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-outline-primary" name="dropStudentSubmit">SUBMIT</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
-              </div>
-
-              </form>
-            </div>
-          </div>
-        </div>
   <!-- Modals End -->
 
 
@@ -403,28 +352,6 @@
         });
       });
   </script>
-
-<!-- Fetching Selected Data For Delete -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(document).on('click','.dropStudent', function(){
-        var classStudentId = $(this).attr("id");
-       
-        $.ajax({
-          url:"../../controllers/grade.php",
-            method:"POST",
-            data:{classStudentId:classStudentId},
-            dataType:"json",
-            success:function(data){
-                $('#drop_class_student_id').val(data.class_student_id);
-                $('#dropStudent').modal('show');
-             }
-        })  
-    })
-});
-</script>
-
-
 
 
 

@@ -85,14 +85,16 @@
                     <h3 class="text-white">The Developers</h3>
                   </div>
         <div class="card-body ml-5">
+
           <div class="row p-3">
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <img src="../../assets/img/our-team/developer-1.png" class="img-fluid" style="width:80%">
+
+                <img src="../../assets/img/our-team/developer-3.png" class="img-fluid" style="width:80%">
               <div class="card" style="width:80%">
                 <div class="card-header bg-primary">
                   <div class="row">
                     <div class="col-md-12">
-                        <h3 class="text-white font-weight-bold" style="text-align: center">Mark Angac</h3>
+                        <h3 class="text-white font-weight-bold" style="text-align: center">Dandave Doydoy</h3>
                      </div>
                      <hr>
                      <div class="col-md-12 border-top p-2">
@@ -101,8 +103,8 @@
                      </div>
                    </div>
                 </div>
-              </div>
             </div>
+          </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <img src="../../assets/img/our-team/developer-2.png" class="img-fluid" style="width:80%">
@@ -123,67 +125,11 @@
             </div>
           </div>
 
-          <div class="row p-3">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <img src="../../assets/img/our-team/developer-3.png" class="img-fluid" style="width:80%">
-              <div class="card" style="width:80%">
-                <div class="card-header bg-primary">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="text-white font-weight-bold" style="text-align: center">Dandave Doydoy</h3>
-                     </div>
-                     <hr>
-                     <div class="col-md-12 border-top p-2">
-                        <h6 class="text-white">Front-end Developer</h6>
-                        <h6 class="text-white">Back-end Developer</h6>
-                     </div>
-                   </div>
+
+            
                 </div>
               </div>
             </div>
-
-       <!--      <div class="col-lg-6 col-md-6 col-sm-6">
-                <img src="../../assets/img/our-team/developer-4.png" class="img-fluid" style="width:80%">
-              <div class="card" style="width:80%">
-                <div class="card-header bg-primary">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="text-white font-weight-bold" style="text-align: center">Kyle Villamor</h3>
-                     </div>
-                     <hr>
-                     <div class="col-md-12 border-top p-2">
-                        <h6 class="text-white">Front-end Developer</h6>
-                        <h6 class="text-white">Back-end Developer</h6>
-                     </div>
-                   </div>
-                </div>
-              </div>
-            </div> -->
-            
-            
-          </div>
-
-
-          <!-- <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <div class="card">
-                <div class="card-header bg-primary">
-                  <h4 class="text-white">Acknowledgement</h4>
-                </div>
-                  <div class="card-body">
-                    <div class="list-group">
-                      <a href="http://mabolochristianacademy.edu.ph/index.php" class="list-group-item list-group-item-action" target="_blank"><i class="fas fa-landmark p-3"></i>mabolochristianacademy.edu.ph</a>
-                      <a href="https://www.facebook.com/MaboloChristianAcademy/" class="list-group-item list-group-item-action" target="_blank"><i class="fab fa-facebook-square p-3"></i>MaboloChristianAcademy</a>
-                      <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-envelope p-3"></i>mabolochristianacademyschool@gmail.com</a>
-                    </div>
-                  </div>
-              </div>
-              </div>
-            </div>
- -->
-            
-                </div>
-              </div>
 
         </section>
       </div>

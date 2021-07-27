@@ -35,7 +35,7 @@
         </ul>
       </nav>
 
-       <nav class="navbar navbar-secondary navbar-expand-lg">
+           <nav class="navbar navbar-secondary navbar-expand-lg">
           <div class="container">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -48,10 +48,10 @@
                       <li class="nav-item"><a href="subject-teacher-class.php" class="nav-link"> <span>Subject Teacher Class</span> </a></li>
                     </ul>
                   </li>
-                  <li class="nav-item active">
+                  <li class="nav-item">
                     <a href="grade-class.php" class="nav-link"><i class="far fa-star"></i><span>Grades</span></a>
                   </li>
-                  <li class="nav-item">
+                    <li class="nav-item active">
                     <a href="stud-general-average.php" class="nav-link"><i class="far fa-envelope"></i><span>Student General Average</span></a>
                   </li>
               </ul>
@@ -59,14 +59,42 @@
       </nav>
 
 
+      <!--  with calculate grade 
+      <nav class="navbar navbar-secondary navbar-expand-lg">
+          <div class="container">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="dashboard.php" class="nav-link"><i class="fas fa-columns"></i><span>Dashboard</span></a>
+            </li>
+               <li class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-chalkboard-teacher"></i><span>View Classes</span></a>
+                    <ul class="dropdown-menu">
+                      <li class="nav-item"><a href="adviser-class.php" class="nav-link"> <span>Advisery Class</span> </a></li>
+                      <li class="nav-item"><a href="subject-teacher-class.php" class="nav-link"> <span>Subject Teacher Class</span> </a></li>
+                    </ul>
+                  </li>
+                 <li class="nav-item active dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-star"></i><span>Grades</span></a>
+                    <ul class="dropdown-menu">
+                      <li class="nav-item"><a href="grade-class.php" class="nav-link"> <span>Add Grades</span> </a></li>
+                      <li class="nav-item active"><a href="calculate-grade-class-example.php" class="nav-link"> <span>Calculate Grades</span> </a></li>
+                    </ul>
+                  </li>
+              </ul>
+        </div>
+      </nav>
+ -->
+
+
+
       <!-- Main Content -->
       <div class="main-content" style="min-height: 566px;">
         <section class="section">
           <div class="section-header">
-            <h1>Advisery Class</h1>
+            <h1>Grade Class</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item">Advisery Class</div>
+              <div class="breadcrumb-item">Grade Class</div>
             </div>
           </div>
 
@@ -78,11 +106,9 @@
           <div class="section-body">
             <div class="card">
               <div class="card-header">
-                 <h4>Advisery Class Masterlist</h4>
+                 <h4>Grade Class Masterlist</h4>
                   <div class="card-header-action">
-                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addClass"><i class="far fa-plus-square"></i> Add Class</button>
-                      <!-- <a href="#" class="btn btn-success btn-sm" id="subject-modal">Add Subjects</a> -->
-                  </div>
+                   </div>
               </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -92,8 +118,6 @@
                             <th>Academic Year</th>
                             <th>Class Name</th>
                             <th>Grade Level</th>
-                            <th>Assign Class Advisor</th>
-                            <th>Class Status</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -105,9 +129,12 @@
                           JOIN academic_year ay 
                           ON ay.academic_year_id = c.academic_year
                           WHERE c.status = '1' 
+                          AND c.class_adviser = '$teacherID'
+                          ORDER BY ay.school_year DESC
                           ";
                           $result = mysqli_query($conn,$sql);
                         
+                      
                           if(mysqli_num_rows($result) > 0) {
                               $count = 1;
                               while($row = mysqli_fetch_assoc($result)) {
@@ -175,25 +202,17 @@
                                               Grade 10  
                                           <?php } ?>
                                         </td>
-                          <td><?php echo $row['t_first_name'];?> <?php echo $row['t_middle_name'][0] ?>. <?php echo $row['t_last_name'];?></td>
-                           <td class="text-center">
-                            <?php if($row['status'] == '1') { ?>
-                              <div class="badge badge-success">Active</div>
-                            <?php } ?>
-                          </td>
                           <td>
-                            <a href="view-class.php?c=<?php echo $row['class_id'] ?>" class="btn btn-info btn-sm"><i class="fas fa-box-open"></i> VIEW</a>
-                          <?php  if($row['set_academic_year'] == '1') { ?>
-                           <button class="btn btn-primary btn-sm updateClass" id='<?php echo $row['class_id']?>'><i class="fas fa-edit"></i> UPDATE</button>
-                           <button class="btn btn-danger btn-sm deleteClass"  id='<?php echo $row['class_id'] ?>'><i class="fas fa-trash"></i> DELETE</button> 
-                         <?php }else{ ?>
-                           <button class="btn btn-light btn-sm"><i class="fas fa-edit"></i> UPDATE</button> 
-                           <button class="btn btn-light btn-sm"><i class="fas fa-trash"></i> DELETE</button>
+                            <a href="view-stud-general-average.php?gc=<?php echo $row['class_id']?>&ay=<?php echo $row['academic_year']?>" class="btn btn-info btn-sm"><i class="fas fa-box-open"></i> VIEW</a>
+                        <!--   <?php  if($row['set_academic_year'] == '1') { ?>
+                           <button class="btn btn-danger btn-sm deleteClass"  id='<?php echo $row['class_id'] ?>'><i class="fas fa-trash"></i> DROP </button> 
+                         --> <?php }else{ ?>
+                           <!-- <button class="btn btn-light btn-sm"><i class="fas fa-trash"></i> DROP </button> -->
                          <?php } ?>
                           </td>
                         </tr>
                        <?php  
-                          $count++;
+                          //$count++;
                             }
                            }
                         ?>
@@ -220,216 +239,6 @@
 
 
 <!-- Modals -->
-
-  <!-- Add Subject Modal -->
-         <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="addClass">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Adding New Subjects</h5>
-              </div>
-
-             <form method="POST" action="../../controllers/class.php" id="formClass">
-                <div class="card-body">
-
-              <?php 
-               // $sql = "SELECT academic_year_id,school_year,set_academic_year FROM academic_year ORDER BY school_year DESC ";
-               $sql = "SELECT academic_year_id,school_year,set_academic_year FROM academic_year  
-                 WHERE set_academic_year = '1'
-                 ";
-               $result = mysqli_query($conn,$sql);
-               $school_year = 'No School Year Available';
-               $academic_year_id = '';
-               while($row = mysqli_fetch_assoc($result)) {
-                  $school_year = $row['school_year'];
-                  $academic_year_id = $row['academic_year_id'];
-                }
-               ?>
-
-               <input type="hidden" value="<?php echo $academic_year_id?>" name="academic_yearID"> 
-
-               <div class="form-row">
-                      <div class="form-group col-md-12">
-                        <label for="add_class_academic_year">
-                          <div class="badge badge-success">Current School Year</div></label>
-                            <input type="text" class="form-control" id="add_class_academic_year" value="<?php echo $school_year ?>" disabled>
-                          </div>
-                      </div>
-
-                  <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="add_class_name">Class Name</label>
-                        <input type="text" class="form-control" id="add_class_name" placeholder="e.g Gift" name="class_name">
-                      </div>
-
-                       <div class="form-group col-md-6">
-                        <label for="add_class_section">Class Section</label>
-                        <input type="text" class="form-control" id="add_class_section" placeholder="e.g Two" name="class_section">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="add_class_gradelevel">Grade Level</label>
-                         <select class="form-control" name="class_gradelevel" id="add_class_gradelevel">
-                            <option hidden value="">Select A Grade Level</option>
-                            <option value="Kinder">Kindergarten</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="Prep">Preparatory</option>
-                            <option value="G1">Grade 1</option>
-                            <option value="G2">Grade 2</option>
-                            <option value="G3">Grade 3</option>
-                            <option value="G4">Grade 4</option>
-                            <option value="G5">Grade 5</option>
-                            <option value="G6">Grade 6</option>
-                            <option value="G7">Grade 7</option>
-                            <option value="G8">Grade 8</option>
-                            <option value="G9">Grade 9</option>
-                            <option value="G10">Grade 10</option>
-                        </select>
-                      </div>
-
-
-                    <?php
-
-                    $sqlAdviser = "SELECT * FROM teacher_ay t_ay
-                    JOIN teacher t 
-                    ON t.teacher_id = t_ay.teacherID 
-                    WHERE t_ay.t_school_yearID = '$academic_year_id'
-                    AND t_ay.isLockTeacherAy = '1'
-                     ";
-                    $resultAdviser = mysqli_query($conn,$sqlAdviser);
-                    
-
-                    ?>
-
-                    <div class="form-group">
-                    <label for="add_class_adviser">Assign Class Adviser</label>
-                          <select class="form-control" id="add_class_adviser" name="class_adviser">
-                              <option hidden value="">Choose Class Adviser</option>
-                             <?php while($rowAdviser = mysqli_fetch_assoc($resultAdviser)) { ?> 
-                              <option value="<?php echo $rowAdviser['teacher_id'] ?>"> <?php echo $rowAdviser['t_first_name'] ?> <?php echo $rowAdviser['t_last_name'] ?></option>
-                              <!-- <option value="<?php //echo $rowAdviser['teacher_id'] ?>"> <?php //echo $rowAdviser['t_grade_level'] ?> - <?php //echo $rowAdviser['t_first_name'] ?> <?php //echo $rowAdviser['t_last_name'] ?></option> -->
-                              <?php } ?>
-                          </select>
-                        </div>
-                </div>
-             
-              <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-outline-primary" name="addClassSubmit">SUBMIT</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
-              </div>  
-          </form>
-
-            </div>
-          </div>
-        </div>
-
-<!-- Update Class Modal -->
-         <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="updateClass">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Updating Class</h5>
-              </div>
-
-             <form method="POST" action="../../controllers/class.php" id="updateFormClass">
-                <div class="card-body">
-
-                  <!-- <div class="alert alert-danger" id="empty-alert">Please fill up the empty fields!</div> -->
-
-                  <input type="hidden" id="update_class_id" name="class_id">
-
-               <?php 
-               // $sql = "SELECT academic_year_id,school_year,set_academic_year FROM academic_year ORDER BY school_year DESC ";
-               $sql = "SELECT academic_year_id,school_year,set_academic_year FROM academic_year  
-                 WHERE set_academic_year = '1'
-                 ";
-               $result = mysqli_query($conn,$sql);
-               while($row = mysqli_fetch_assoc($result)) {
-                  $school_year = $row['school_year'];
-                  $academic_year_id = $row['academic_year_id'];
-                }
-               ?>
-
-               <input type="hidden" value="<?php echo $academic_year_id?>" name="academic_yearID"> 
-
-               <div class="form-row">
-                      <div class="form-group col-md-12">
-                        <label for="update_class_academic_year">
-                          <div class="badge badge-success">Current School Year</div></label>
-                        <input type="text" class="form-control" id="update_class_academic_year" value="<?php echo $school_year ?>" disabled>
-                      </div>
-                   </div>
-
-                  <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="update_class_name">Class Name</label>
-                        <input type="text" class="form-control" id="update_class_name" name="class_name">
-                      </div>
-
-                       <div class="form-group col-md-6">
-                        <label for="update_class_section">Class Section</label>
-                        <input type="text" class="form-control" id="update_class_section" name="class_section">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="update_class_gradelevel">Grade Level</label>
-                         <select class="form-control" name="class_gradelevel" id="update_class_gradelevel">
-                            <option hidden value="">Select A Grade Level</option>
-                            <option id="update_gradelevel" selected hidden></option>
-                            <option value="Kinder">Kindergarten</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="Prep">Preparatory</option>
-                            <option value="G1">Grade 1</option>
-                            <option value="G2">Grade 2</option>
-                            <option value="G3">Grade 3</option>
-                            <option value="G4">Grade 4</option>
-                            <option value="G5">Grade 5</option>
-                            <option value="G6">Grade 6</option>
-                            <option value="G7">Grade 7</option>
-                            <option value="G8">Grade 8</option>
-                            <option value="G9">Grade 9</option>
-                            <option value="G10">Grade 10</option>
-                        </select>
-                      </div>
-
-
-                    <?php
-                    $sqlAdviser = "SELECT * FROM teacher_ay t_ay
-                    JOIN teacher t 
-                    ON t.teacher_id = t_ay.teacherID
-                    WHERE t_ay.t_school_yearID = '$academic_year_id' 
-                    AND t_ay.isLockTeacherAy = '1'
-                    ";
-                    $resultAdviser = mysqli_query($conn,$sqlAdviser);
-                    ?>
-
-                    <div class="form-group">
-                    <label for="update_class_adviser">Assign Class Adviser</label>
-                          <select class="form-control" id="update_class_adviser" name="class_adviser">
-                              <option hidden value="">Choose Class Adviser</option>
-                              <option id="update_class_teacher_fullname" selected hidden></option>
-                             <?php 
-                             while($rowAdviser = mysqli_fetch_assoc($resultAdviser)) { ?> 
-                              <option value="<?php echo $rowAdviser['teacher_id'] ?>"><?php echo $rowAdviser['t_first_name'] ?> <?php echo $rowAdviser['t_last_name'] ?></option>
-                             <?php }  ?>
-                          </select>
-                        </div>
-                </div>
-             
-              <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-outline-primary" name="updateClassSubmit">SUBMIT</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
-              </div>
-          </form>
-
-            </div>
-          </div>
-        </div>
-
 
   <!-- Delete Subject Modal -->
          <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
@@ -482,13 +291,15 @@
 
 <!-- Change Text for Datatable if empty -->
 <script>
-  $(document).ready(function(){
-      $("#table-class").DataTable({
-          "language": {
+$(document).ready(function() {
+    $('#table-class').DataTable( {
+        "order": [[ 0, "desc" ]],
+        "language": {
             "emptyTable": "No classes available"
           }
-      });
-    });
+    } );
+} );
+
 </script>
 
 <!-- Form validation for Update Subject Form -->

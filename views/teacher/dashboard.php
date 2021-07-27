@@ -35,7 +35,7 @@
         </ul>
       </nav>
 
-         <nav class="navbar navbar-secondary navbar-expand-lg">
+        <nav class="navbar navbar-secondary navbar-expand-lg">
           <div class="container">
           <ul class="navbar-nav">
             <li class="nav-item active">
@@ -50,6 +50,9 @@
                   </li>
                   <li class="nav-item">
                     <a href="grade-class.php" class="nav-link"><i class="far fa-star"></i><span>Grades</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="stud-general-average.php" class="nav-link"><i class="far fa-envelope"></i><span>Student General Average</span></a>
                   </li>
               </ul>
         </div>

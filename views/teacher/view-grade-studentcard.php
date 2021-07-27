@@ -71,6 +71,9 @@
                   <li class="nav-item active">
                      <a href="grade-class.php" class="nav-link"><i class="far fa-star"></i><span>Grades</span></a>
                   </li>
+                    <li class="nav-item">
+                    <a href="stud-general-average.php" class="nav-link"><i class="far fa-envelope"></i><span>Student General Average</span></a>
+                  </li>
                </ul>
             </div>
          </nav>
@@ -357,8 +360,9 @@
                                           
                                           echo $displayAverage;
 
-                                        
-                                           ?>  
+                                          ?>  
+                                           
+                                           <a href="../../controllers/general_average.php?ave=<?php echo $displayAverage?>&class=<?php echo $getClass ?>&student=<?php echo $getStudent ?>&acadyear=<?php echo $display_ay ?>" class="btn btn-primary btn-sm">SUBMIT</a> 
 
 
                                           </td>
