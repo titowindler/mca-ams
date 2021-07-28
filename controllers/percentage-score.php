@@ -127,8 +127,9 @@ if($num_rows_cg < 1) {
         header("Location:../views/teacher/view-calculate-grade-studentlist-percentage.php?ps=$percentagescore_id&f=".$str);
          }
         } else {
+        $str="Cannot Add The Same Grading Quarter";
         //echo "NAA NAY SULOD";
-          header("Location:../views/teacher/view-calculate-grade-studentlist-percentage.php?ps=$percentagescore_id&i=".$str);
+          header("Location:../views/teacher/view-calculate-grade-studentlist-percentage.php?ps=$percentagescore_id&f=".$str);
         }
      }
    

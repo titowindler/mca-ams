@@ -129,6 +129,9 @@
             </div>
           </div>
 
+
+          <?php require('menu-display-alert.php'); ?>
+
           <div class="section-body">
             
             <div class="card">
@@ -177,6 +180,8 @@
                   <div class="card-header-action">
                        <h4><button class="btn btn-success btn-sm gradingQuarter"  id='<?php echo $percentage_id ?>'><i class="far fa-plus-square"></i> ADD GRADING QUARTER </button></h4>
                   </div>
+                    <a href="view-calculate-grade-subjectlist.php?tid=<?php echo $get_teacher?>&ay=<?php echo $get_ay ?>" class="btn btn-danger btn-sm"><i class="far fa-arrow-alt-circle-left"></i> Return </a>
+               
                 </div>
             <div class="card-body">
                     <div class="table-responsive">
@@ -207,7 +212,7 @@
                           // AND ps.percentagescore_subject_id = '$get_subject'
                           // ";
 
-                          $sqlGetCG1 = "SELECT DISTINCT(cg.calculategrade_ps_id), cg.calculategrade_grading_quarter, cg.calculategrade_academic_year_id, cg.calculategrade_teacher_id, cg.calculategrade_class_id, cg.calculategrade_subject_id FROM calculate_grade cg
+                          $sqlGetCG1 = "SELECT DISTINCT(cg.calculategrade_ps_id), cg.calculategrade_grading_quarter, cg.calculategrade_academic_year_id, cg.calculategrade_teacher_id, cg.calculategrade_class_id, cg.calculategrade_subject_id, cg.calculategrade_isLock FROM calculate_grade cg  
                           WHERE cg.calculategrade_academic_year_id = '$get_ay'
                           AND cg.calculategrade_ps_id = '$get_ps'
                           AND cg.calculategrade_teacher_id = '$get_teacher'
@@ -216,17 +221,31 @@
                           ";
 
                           $resultGetCG1 = mysqli_query($conn,$sqlGetCG1);
-                            while($rowGetCG1 = mysqli_fetch_assoc($resultGetCG1)) {
+
+                  
+                          while($rowGetCG1 = mysqli_fetch_assoc($resultGetCG1)) {
                           ?>
                         
                           <tr>
                           <td><?php echo $rowGetCG1['calculategrade_grading_quarter']; ?></td>
+
+                          <?php if($rowGetCG1['calculategrade_isLock'] == 0) { ?>
                            <td>
-                            <a href="calculate-student-finalgrade.php?ps=<?php echo $get_ps?>&quarter=<?php echo $rowGetCG1['calculategrade_grading_quarter']; ?>" class="btn btn-info btn-sm text-white"><i class="fas fa-box-open"></i> VIEW </a>  
+
+                            <a href="calculate-student-finalgrade.php?ps=<?php echo $get_ps?>&quarter=<?php echo $rowGetCG1['calculategrade_grading_quarter']; ?>" class="btn btn-info btn-sm text-white"><i class="fas fa-box-open"></i> UPDATE </a>
+
+                             <a href="../../controllers/grade_quarter_lock.php?ps=<?php echo $get_ps?>&quarter=<?php echo $rowGetCG1['calculategrade_grading_quarter']; ?>" class="btn btn-primary btn-sm text-white"> SET AS DONE </a>    
                           </td>
                          </tr>
 
-                      <?php } ?>
+                      <?php } else if($rowGetCG1['calculategrade_isLock'] == 1) { ?>
+
+                        <td>
+                         <a href="only-view-calculate-student-finalgrade.php?ps=<?php echo $get_ps?>&quarter=<?php echo $rowGetCG1['calculategrade_grading_quarter']; ?>" class="btn btn-info btn-sm text-white"><i class="fas fa-box-open"></i> VIEW </a>
+                        </td>
+
+                      <?php }
+                      }  ?>
 
 
 

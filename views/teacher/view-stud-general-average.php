@@ -63,11 +63,11 @@
       <div class="main-content" style="min-height: 566px;">
         <section class="section">
           <div class="section-header">
-            <h1>View Subject Teacher Class</h1>
+            <h1>View Student General Average</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item"><a href="#">Subject Teacher Class</a></div>
-              <div class="breadcrumb-item">View Subject Teacher Class</div>
+              <div class="breadcrumb-item"><a href="#">Student General Average</a></div>
+              <div class="breadcrumb-item">View Student General Average</div>
             </div>
           </div>
 
@@ -75,7 +75,7 @@
             
             <div class="card">
               <div class="card-header">
-                 <h4>View Subject Teacher Class Schedule</h4>
+                 <h4>View Student General Average Class</h4>
                   <div class="card-header-action">
                     <a href="stud-general-average.php" class="btn btn-danger btn-sm"><i class="far fa-arrow-alt-circle-left"></i> Return </a>
                   </div>
@@ -150,19 +150,17 @@
                           ga.general_acadyear_id = '$getAcademicYear'
                           ";
 
-                          var_dump($sqlGenAve);
-
+                      
                           $result = mysqli_query($conn,$sqlGenAve);
                           while($row = mysqli_fetch_assoc($result)) {
 
-                         
                           ?>
 
                         <tr>
                           <td><?php echo $row['s_id_number'] ?></td>  
-                          <td></td>
-                          <td></td>
-                          <td></td>   
+                          <td><?php echo $row['s_first_name'];?> <?php echo $row['s_middle_name'][0] ?>. <?php echo $row['s_last_name'];?> </td>
+                          <td><?php echo $row['general_average_points'] ?></td>
+                          <td><?php echo $row['general_remarks']?></td>   
                         </tr>
 
 

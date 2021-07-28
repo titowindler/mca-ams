@@ -169,8 +169,10 @@
                                           ON s.subject_id = csubj.csubj_subjectID
                                           WHERE csubj.csubj_classID = '$getClass' 
                                           AND cstud.cstud_studentID = '$getStudent'
+                                          -- AND c.academic_year = '$display_ay'
                                           ";
                                           $resultAddClassSubject = mysqli_query($conn,$sqlAddClassSubject);
+
                                           $count = 0;                                  
                                           while($rowGetClassSubject = mysqli_fetch_assoc($resultAddClassSubject)) {
                                               $subject_name = $rowGetClassSubject['subject_name'];
@@ -187,6 +189,7 @@
                                              FROM student_grade 
                                              WHERE studentgrade_subjectid = '$rowGetClassSubject[subject_id]'
                                              AND studentgrade_studentid = '$getStudent'
+                                             AND studentgrade_academicyear = '$display_ay'
                                              ";
                                              $resultStudentGrade1 = mysqli_query($conn,$sqlStudentGrade1);
                                              $displayStudentGrade1 = mysqli_fetch_assoc($resultStudentGrade1)
@@ -197,6 +200,7 @@
                                              FROM student_grade 
                                              WHERE  studentgrade_subjectid = '$rowGetClassSubject[subject_id]'
                                              AND studentgrade_studentid = '$getStudent'
+                                             AND studentgrade_academicyear = '$display_ay'
                                              ";
                                              
                                              $resultStudentGrade2 = mysqli_query($conn,$sqlStudentGrade2);
@@ -206,6 +210,7 @@
                                              FROM student_grade 
                                              WHERE  studentgrade_subjectid = '$rowGetClassSubject[subject_id]'
                                              AND studentgrade_studentid = '$getStudent'
+                                             AND studentgrade_academicyear = '$display_ay'
                                              ";
                                              
                                              
@@ -216,6 +221,7 @@
                                              FROM student_grade 
                                              WHERE  studentgrade_subjectid = '$rowGetClassSubject[subject_id]'
                                              AND studentgrade_studentid = '$getStudent'
+                                             AND studentgrade_academicyear = '$display_ay'
                                              ";
                                              
                                              $resultStudentGrade4 = mysqli_query($conn,$sqlStudentGrade4);

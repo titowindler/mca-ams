@@ -91,10 +91,10 @@
       <div class="main-content" style="min-height: 566px;">
         <section class="section">
           <div class="section-header">
-            <h1>Grade Class</h1>
+            <h1>Student General Average</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item">Grade Class</div>
+              <div class="breadcrumb-item">Student General Average Class</div>
             </div>
           </div>
 
@@ -106,7 +106,7 @@
           <div class="section-body">
             <div class="card">
               <div class="card-header">
-                 <h4>Grade Class Masterlist</h4>
+                 <h4>Student General Average Masterlist</h4>
                   <div class="card-header-action">
                    </div>
               </div>
