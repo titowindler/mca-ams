@@ -2,6 +2,258 @@
 
 require("dbconn.php");
 
+if(isset($_POST['addContinueStudentSubmit'])) {
+  insertContinueStudent();
+}
+
+function insertContinueStudent() {
+  $conn = dbConn();
+  $school_year              = $_POST['school_year'];
+  $studentAyId              = $_POST['student_ay_studentID'];
+  $studentAyGradeLevel      = $_POST['student_ay_gradelevel'];
+  $studentAyStudentType     = 'Old';
+  $created_at = date('Y-m-d');
+  $updated_at = '0000-00-00';
+  $status = '1';
+
+  $studentAy = intval($studentAyId);
+
+  // formula for grade level
+
+  if($studentAyGradeLevel == 'Kinder') {
+    $calculateSayGradeLevel = 1;
+  } else if($studentAyGradeLevel == 'Nursery') {
+    $calculateSayGradeLevel = 2;
+  } else if($studentAyGradeLevel == 'Prep') {
+    $calculateSayGradeLevel = 3;
+  } else if($studentAyGradeLevel == 'G1') {
+    $calculateSayGradeLevel = 4;
+  } else if($studentAyGradeLevel == 'G2') {
+    $calculateSayGradeLevel = 5;
+  } else if($studentAyGradeLevel == 'G3') {
+    $calculateSayGradeLevel = 6;
+  } else if($studentAyGradeLevel == 'G4') {
+    $calculateSayGradeLevel = 7;
+  } else if($studentAyGradeLevel == 'G5') {
+    $calculateSayGradeLevel = 8;
+  } else if($studentAyGradeLevel == 'G6') {
+    $calculateSayGradeLevel = 9;
+  } else if($studentAyGradeLevel == 'G7') {
+    $calculateSayGradeLevel = 10;
+  } else if($studentAyGradeLevel == 'G8') {
+    $calculateSayGradeLevel = 11;
+  } else if($studentAyGradeLevel == 'G9') {
+    $calculateSayGradeLevel = 12;
+  } else if($studentAyGradeLevel == 'G10') {
+    $calculateSayGradeLevel = 13;
+  }
+
+
+  // query to get general average grade level
+
+  $gen_schoolyear = ($school_year-1);
+
+  $sqlGen = "SELECT * FROM general_average
+  WHERE general_student_id = '$studentAy' AND 
+  general_acadyear_id = '$gen_schoolyear'
+  ";
+
+  $resultGen = mysqli_query($conn,$sqlGen);
+  while($rowGen = mysqli_fetch_assoc($resultGen)) {
+   $rowGradeLevel = $rowGen['general_student_gradelevel'];
+  }
+
+   if($rowGradeLevel == 'Kinder') {
+    $calculateGenGradeLevel = 1;
+  } else if($rowGradeLevel == 'Nursery') {
+    $calculateGenGradeLevel = 2;
+  } else if($rowGradeLevel == 'Prep') {
+    $calculateGenGradeLevel = 3;
+  } else if($rowGradeLevel == 'G1') {
+    $calculateGenGradeLevel = 4;
+  } else if($rowGradeLevel == 'G2') {
+    $calculateGenGradeLevel = 5;
+  } else if($rowGradeLevel == 'G3') {
+    $calculateGenGradeLevel = 6;
+  } else if($rowGradeLevel == 'G4') {
+    $calculateGenGradeLevel = 7;
+  } else if($rowGradeLevel == 'G5') {
+    $calculateGenGradeLevel = 8;
+  } else if($rowGradeLevel == 'G6') {
+    $calculateGenGradeLevel = 9;
+  } else if($rowGradeLevel == 'G7') {
+    $calculateGenGradeLevel = 10;
+  } else if($rowGradeLevel == 'G8') {
+    $calculateGenGradeLevel = 11;
+  } else if($rowGradeLevel == 'G9') {
+    $calculateGenGradeLevel = 12;
+  } else if($rowGradeLevel == 'G10') {
+    $calculateGenGradeLevel = 13;
+  }
+
+if(($calculateGenGradeLevel+1) == $calculateSayGradeLevel ) {
+  $sql = "INSERT INTO student_ay (s_school_yearID,studentID,s_grade_level,student_type,created_at,updated_at) VALUES
+  ('$school_year','$studentAyId','$studentAyGradeLevel','$studentAyStudentType','$created_at','$updated_at')";
+   $result = mysqli_query($conn,$sql);
+
+  // save student
+  $schoolyear = $_POST['school_year'];
+  $sql = "UPDATE student_ay SET isLockStudentAy = '1' 
+  WHERE `s_school_yearID` = '$schoolyear' ";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+    $str="Added Student To Current Academic Year";
+    header("Location:../views/admin/view-academic-year.php?sy=$school_year&s=".$str);
+    }else{
+    //    $str="Error Adding teacher";
+        /*echo"<pre>";
+        print_r($_POST);  
+        echo"</pre>";
+        echo $createGrade;
+        echo $result;
+        echo("Error description: " . mysqli_error($conn));
+    
+
+        exit();*/
+
+        //var_dump($conn);
+
+      //  header("Location:../views/admin/view-academic-year.php?sy=$school_year&f=".$str);
+      
+      }
+    } else {
+     $str = "Cannot Add Student";
+     header("Location:../views/admin/view-academic-year.php?sy=$school_year&f=".$str);
+  }
+}
+
+if(isset($_POST['addFailedStudentSubmit'])) {
+  insertFailedStudent();
+}
+
+function insertFailedStudent() {
+  $conn = dbConn();
+  $school_year              = $_POST['school_year'];
+  $studentAyId              = $_POST['student_ay_studentID'];
+  $studentAyGradeLevel      = $_POST['student_ay_gradelevel'];
+  $studentAyStudentType     = 'Old';
+  $created_at = date('Y-m-d');
+  $updated_at = '0000-00-00';
+  $status = '1';
+
+  $studentAy = intval($studentAyId);
+
+  // formula for grade level
+
+  if($studentAyGradeLevel == 'Kinder') {
+    $calculateSayGradeLevel = 1;
+  } else if($studentAyGradeLevel == 'Nursery') {
+    $calculateSayGradeLevel = 2;
+  } else if($studentAyGradeLevel == 'Prep') {
+    $calculateSayGradeLevel = 3;
+  } else if($studentAyGradeLevel == 'G1') {
+    $calculateSayGradeLevel = 4;
+  } else if($studentAyGradeLevel == 'G2') {
+    $calculateSayGradeLevel = 5;
+  } else if($studentAyGradeLevel == 'G3') {
+    $calculateSayGradeLevel = 6;
+  } else if($studentAyGradeLevel == 'G4') {
+    $calculateSayGradeLevel = 7;
+  } else if($studentAyGradeLevel == 'G5') {
+    $calculateSayGradeLevel = 8;
+  } else if($studentAyGradeLevel == 'G6') {
+    $calculateSayGradeLevel = 9;
+  } else if($studentAyGradeLevel == 'G7') {
+    $calculateSayGradeLevel = 10;
+  } else if($studentAyGradeLevel == 'G8') {
+    $calculateSayGradeLevel = 11;
+  } else if($studentAyGradeLevel == 'G9') {
+    $calculateSayGradeLevel = 12;
+  } else if($studentAyGradeLevel == 'G10') {
+    $calculateSayGradeLevel = 13;
+  }
+
+
+  // query to get general average grade level
+
+  $gen_schoolyear = ($school_year-1);
+
+  $sqlGen = "SELECT * FROM general_average
+  WHERE general_student_id = '$studentAy' AND 
+  general_acadyear_id = '$gen_schoolyear'
+  ";
+
+  $resultGen = mysqli_query($conn,$sqlGen);
+  while($rowGen = mysqli_fetch_assoc($resultGen)) {
+   $rowGradeLevel = $rowGen['general_student_gradelevel'];
+  }
+
+   if($rowGradeLevel == 'Kinder') {
+    $calculateGenGradeLevel = 1;
+  } else if($rowGradeLevel == 'Nursery') {
+    $calculateGenGradeLevel = 2;
+  } else if($rowGradeLevel == 'Prep') {
+    $calculateGenGradeLevel = 3;
+  } else if($rowGradeLevel == 'G1') {
+    $calculateGenGradeLevel = 4;
+  } else if($rowGradeLevel == 'G2') {
+    $calculateGenGradeLevel = 5;
+  } else if($rowGradeLevel == 'G3') {
+    $calculateGenGradeLevel = 6;
+  } else if($rowGradeLevel == 'G4') {
+    $calculateGenGradeLevel = 7;
+  } else if($rowGradeLevel == 'G5') {
+    $calculateGenGradeLevel = 8;
+  } else if($rowGradeLevel == 'G6') {
+    $calculateGenGradeLevel = 9;
+  } else if($rowGradeLevel == 'G7') {
+    $calculateGenGradeLevel = 10;
+  } else if($rowGradeLevel == 'G8') {
+    $calculateGenGradeLevel = 11;
+  } else if($rowGradeLevel == 'G9') {
+    $calculateGenGradeLevel = 12;
+  } else if($rowGradeLevel == 'G10') {
+    $calculateGenGradeLevel = 13;
+  }
+
+if(($calculateGenGradeLevel) == $calculateSayGradeLevel ) {
+  $sql = "INSERT INTO student_ay (s_school_yearID,studentID,s_grade_level,student_type,created_at,updated_at) VALUES
+  ('$school_year','$studentAyId','$studentAyGradeLevel','$studentAyStudentType','$created_at','$updated_at')";
+   $result = mysqli_query($conn,$sql);
+
+  // save student
+  $schoolyear = $_POST['school_year'];
+  $sql = "UPDATE student_ay SET isLockStudentAy = '1' 
+  WHERE `s_school_yearID` = '$schoolyear' ";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+    $str="Added Student To Current Academic Year";
+    header("Location:../views/admin/view-academic-year.php?sy=$school_year&s=".$str);
+    }else{
+    //    $str="Error Adding teacher";
+        /*echo"<pre>";
+        print_r($_POST);  
+        echo"</pre>";
+        echo $createGrade;
+        echo $result;
+        echo("Error description: " . mysqli_error($conn));
+    
+
+        exit();*/
+
+        //var_dump($conn);
+
+      //  header("Location:../views/admin/view-academic-year.php?sy=$school_year&f=".$str);
+      
+      }
+    } else {
+     $str = "Cannot Add Student";
+     header("Location:../views/admin/view-academic-year.php?sy=$school_year&f=".$str);
+  }
+}
+
 if(isset($_POST['addStudentAySubmit'])) {
 	insertStudentAy();
 }
@@ -11,7 +263,7 @@ function insertStudentAy() {
   $school_year              = $_POST['school_year'];
   $studentAyId              = $_POST['student_ay_studentID'];
   $studentAyGradeLevel      = $_POST['student_ay_gradelevel'];
-  $studentAyStudentType     = $_POST['student_ay_studenttype'];
+  $studentAyStudentType     = 'New';
   $created_at = date('Y-m-d');
   $updated_at = '0000-00-00';
   $status = '1';

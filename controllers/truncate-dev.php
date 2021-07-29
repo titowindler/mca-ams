@@ -199,3 +199,56 @@ function studentGradeTruncate() {
     }
   }
 
+
+// general average
+if(isset($_GET['ga'])){
+  generalAverageTruncate();
+}
+
+function generalAverageTruncate() {
+  $conn = dbConn();
+  $sql = "TRUNCATE TABLE general_average";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+      header("Location:../views/admin/truncate-dev.php");
+    }else{
+      echo "ERROR!" .mysqli_error($conn);
+    }
+  }
+
+
+// student enroll status set to new
+if(isset($_GET['es'])){
+  studentEnrollStatusUpdate();
+}
+
+function studentEnrollStatusUpdate() {
+  $conn = dbConn();
+  $sql = "UPDATE student SET enroll_status = 'New' ";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+      header("Location:../views/admin/truncate-dev.php");
+    }else{
+      echo "ERROR!" .mysqli_error($conn);
+    }
+  }
+
+
+// calculate grade status set to not done
+if(isset($_GET['cgl'])){
+  calculateGradeStatusUpdate();
+}
+
+function calculateGradeStatusUpdate() {
+  $conn = dbConn();
+  $sql = "UPDATE calculate_grade SET calculategrade_isLock = '0' ";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+      header("Location:../views/admin/truncate-dev.php");
+    }else{
+      echo "ERROR!" .mysqli_error($conn);
+    }
+  }

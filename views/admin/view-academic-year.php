@@ -92,6 +92,7 @@
           <?php require("menu-display-alert.php"); ?>
           <!-- -->
 
+          <!-- Section For Newly Created Students Accounts -->
           <div class="section-body">
             <div class="card">
               <div class="card-header">
@@ -121,11 +122,12 @@
 
                             <?php 
 
-                              $sql = "SELECT s_ay.s_school_yearID,s_ay.studentID,s_ay.s_grade_level,s_ay.student_type,s_ay.isLockStudentAy,s.s_id_number,s.s_first_name,s.s_last_name,s.gender 
+                              $sql = "SELECT s_ay.s_school_yearID,s_ay.studentID,s_ay.s_grade_level,s_ay.student_type,s_ay.isLockStudentAy,s.s_id_number,s.s_first_name,s.s_last_name,s.gender, s.enroll_status 
                               FROM student_ay s_ay 
                               JOIN student s
                               ON s_ay.studentID = s.student_id 
                               WHERE s_ay.s_school_yearID = '$get_academic_year' 
+                              AND s.enroll_status = 'New'
                               ORDER BY s_ay.studentID DESC
                               ";
                               $result = mysqli_query($conn,$sql);
@@ -348,7 +350,7 @@
                         </tbody>
                       </table>
                     </div>
-                  </div>
+            </div>
               <div class="card-footer bg-whitesmoke"> 
               <!--   <?php
 
@@ -369,6 +371,8 @@
             </div>
           </div>
 
+
+          <!-- Section For Teachers -->
           <div class="section-body">
             <div class="card">
               <div class="card-header">
@@ -469,6 +473,283 @@
             </div>
           </div>
 
+               <div class="section-body">
+            <div class="card">
+              <div class="card-header">
+                <h4>Continuing Students Masterlist</h4>
+                  <div class="card-header-action">
+                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addcontinueStudentAy" ><i class="far fa-plus-square"></i> Add Continuing Students</button>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addfailedStudentAy" ><i class="far fa-plus-square"></i> Add Failed Students</button>
+                      <!-- <a href="#" class="btn btn-success btn-sm" id="subject-modal">Add Subjects</a> -->
+                    <a href="academic-year.php" class="btn btn-danger btn-sm text-white"><i class="far fa-arrow-alt-circle-left"></i> Return</a>
+                  </div>
+              </div>
+            <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover table-bordered" id="table-ay-student">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Student Account No</th>
+                            <th>Student Name</th>
+                            <th>Student Gender</th>
+                            <th>Grade Level</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php 
+
+                              $sql = "SELECT s_ay.s_school_yearID,s_ay.studentID,s_ay.s_grade_level,s_ay.student_type,s_ay.isLockStudentAy,s.s_id_number,s.s_first_name,s.s_last_name,s.gender 
+                              FROM student_ay s_ay 
+                              JOIN student s
+                              ON s_ay.studentID = s.student_id 
+                              WHERE s_ay.s_school_yearID = '$get_academic_year' 
+                              AND s_ay.student_type = 'Old'
+                              ORDER BY s_ay.studentID DESC
+                              ";
+                              $result = mysqli_query($conn,$sql);
+                              if(mysqli_num_rows($result) > 0) {
+                                $count = 1;
+                                while($row = mysqli_fetch_assoc($result)) {
+                              ?>
+                                      <tr class="text-center">
+                                        <td class="text-center">
+                                          <?php echo $count; ?>
+                                        </td>
+                                        <td><?php echo $row['s_id_number'] ?></td>
+                                        <td><?php echo $row['s_first_name']; ?> <?php echo $row['s_last_name']; ?> </td>
+
+                                        <?php if($row['gender'] == '1') { ?>
+                                           <td>Male</td>
+                                        <?php } else { ?>
+                                           <td>Female</td>
+                                        <?php } ?>
+
+                                      <?php
+                                        // displaying enum value of new
+                                       if( $row['student_type'] == 'New' ) { ?>
+                                        <td>
+                                          <?php 
+                                          // displaying enum value of grade level description
+                                              if($row['s_grade_level'] == 'Kinder' ) { ?>
+                                              Kindergarten  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Nursery' ) { ?>
+                                              Nursery  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Prep' ) { ?>
+                                              Prepatory  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G1' ) { ?>
+                                              Grade 1  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G2' ) { ?>
+                                              Grade 2  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G3' ) { ?>
+                                              Grade 3  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G4' ) { ?>
+                                              Grade 4  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G5' ) { ?>
+                                              Grade 5  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G6' ) { ?>
+                                              Grade 6  
+                                          <?php } ?> 
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G7' ) { ?>
+                                              Grade 7  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G8' ) { ?>
+                                              Grade 8  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G9' ) { ?>
+                                              Grade 9  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G10' ) { ?>
+                                              Grade 10  
+                                          <?php } ?>
+                                          <span class="badge badge-success"> 
+                                            <?php echo $row['student_type']?>
+                                          </span> 
+                                        </td>
+                                      <?php 
+                                      // if no new enum value, proceed to displaying continue enum value
+                                    } else if( $row['student_type'] == 'Continue' ) {  ?>
+                                        <td> 
+                                          <?php 
+                                              // displaying enum value of grade level description 
+                                              if($row['s_grade_level'] == 'Kinder' ) { ?>
+                                              Kindergarten  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Nursery' ) { ?>
+                                              Nursery  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Prep' ) { ?>
+                                              Prepatory  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G1' ) { ?>
+                                              Grade 1  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G2' ) { ?>
+                                              Grade 2  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G3' ) { ?>
+                                              Grade 3  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G4' ) { ?>
+                                              Grade 4  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G5' ) { ?>
+                                              Grade 5  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G6' ) { ?>
+                                              Grade 6  
+                                          <?php } ?> 
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G7' ) { ?>
+                                              Grade 7  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G8' ) { ?>
+                                              Grade 8  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G9' ) { ?>
+                                              Grade 9  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G10' ) { ?>
+                                              Grade 10  
+                                          <?php } ?>
+                                          <span class="badge badge-info"> <?php echo $row['student_type']?></span> </td>
+                                      <?php 
+                                        // if no new and continue enum value, proceed to displaying old enum value
+                                        } else { ?>
+                                        <!-- <td> <?php //echo $row['s_grade_level']?> <span class="badge badge-light"> <?php //echo $row['student_type']?></span> </td> -->
+                                        <td>
+                                          <?php  
+                                             // displaying enum value of grade level description 
+                                              if($row['s_grade_level'] == 'Kinder' ) { ?>
+                                              Kindergarten  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Nursery' ) { ?>
+                                              Nursery  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'Prep' ) { ?>
+                                              Prepatory  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G1' ) { ?>
+                                              Grade 1  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G2' ) { ?>
+                                              Grade 2  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G3' ) { ?>
+                                              Grade 3  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G4' ) { ?>
+                                              Grade 4  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G5' ) { ?>
+                                              Grade 5  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G6' ) { ?>
+                                              Grade 6  
+                                          <?php } ?> 
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G7' ) { ?>
+                                              Grade 7  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G8' ) { ?>
+                                              Grade 8  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G9' ) { ?>
+                                              Grade 9  
+                                          <?php } ?>
+                                          <?php 
+                                              if($row['s_grade_level'] == 'G10' ) { ?>
+                                              Grade 10  
+                                          <?php } ?></td>
+                                      <?php } ?>
+
+                                    <?php if($row['isLockStudentAy'] == 1) { ?>
+                                       <td>
+                                        <!-- <button href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> UPDATE</button> -->
+                                          <button class="btn btn-danger btn-sm deleteStudentAy" id="<?php echo $row['studentID'] ?>"><i class="far fa-minus-square"></i> REMOVE</button>
+                                       </td>
+                                    <?php }else{ ?>
+                                      <td>
+                                        <!-- <button href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> UPDATE</button> -->
+                                          <button class="btn btn-light btn-sm"><i class="far fa-minus-square"></i> REMOVE</button>
+                                       </td>
+                                    <?php } ?>
+                                      </tr>
+
+                               <?php
+                                    $count++;
+                                 }
+                            } else {
+                               // echo var_dump($conn);  
+                            }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+            </div>
+              <div class="card-footer bg-whitesmoke"> 
+              <!--   <?php
+
+                // for save student button
+                $sqlIsLock = "SELECT * FROM student_ay WHERE s_school_yearID = '$get_academic_year'
+                ORDER BY isLockStudentAy = '1' ";
+                $resultIsLock = mysqli_query($conn,$sqlIsLock);
+                $rowIsLock = mysqli_fetch_assoc($resultIsLock);
+
+                if($rowIsLock['isLockStudentAy'] == 0) { ?>
+                    <button class="btn btn-success btn-sm saveStudentAy" id="<?php echo $get_academic_year ?>"><i class="far fa-minus-square"></i> SAVE</button>
+                <?php }else if($rowIsLock['isLockStudentAy'] == 1) { ?>
+                    <button class="btn btn-light btn-sm saveStudentAy"><i class="far fa-minus-square"></i> SAVE </button>
+                <?php }
+                
+              ?> -->
+              </div>
+            </div>
+          </div>
+
 
          </section>
       </div>
@@ -505,7 +786,7 @@
                         <select class="form-control js-example-basic-single" name="student_ay_studentID[]" id="add_student_ay_student" multiple="multiple" required="">
                           <?php 
                           // display all students in select form 
-                            $sql = "SELECT * FROM student WHERE status = '1' ";
+                            $sql = "SELECT * FROM student WHERE status = '1' AND enroll_status = 'New' ";
                             $result = mysqli_query($conn,$sql);
                             while($row = mysqli_fetch_assoc($result)) {
                               $checkSql = "SELECT * FROM student_ay WHERE studentID = '$row[student_id]' AND s_school_yearID = '$get_academic_year' ";
@@ -544,7 +825,7 @@
                      </div>
                   </div> 
 
-                  <div class="form-row">
+              <!--     <div class="form-row">
                       <div class="form-group col-12">
                         <label for="student_type">Select A Student Type</label>
                         <select class="form-control" name="student_ay_studenttype" id="add_student_ay_studenttype" >
@@ -553,12 +834,212 @@
                             <option value="Old">Old</option>
                          </select>
                        </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
                   <div class="modal-footer bg-whitesmoke br">
                     <button type="submit" class="btn btn-outline-primary" name="addStudentAySubmit">SUBMIT</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
+                  </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+  <!-- Modals End -->
+
+  <!-- Modals Student View -->
+
+         <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="addContinueStudentAy">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add Continuing Student</h5>
+              </div>
+
+
+ 
+                <form method="POST" id="formStudentAy" action="../../controllers/view-academic-year.php">
+                <div class="card-body">
+
+                  <input type="hidden" name="school_year" value="<?php echo $get_academic_year ?>">
+          
+                  <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="school_year">Select A Student</label>
+                        <!-- <input type="text" class="validate form-control" id="school_year" placeholder="e.g 2019-2020" name="school_year"  pattern="[a-zA-Z0-9-]+"> -->
+                        <select class="form-control" name="student_ay_studentID" id="add_student_ay_student">
+                          <?php 
+                          $gen_sy = ($get_academic_year-1);
+                      
+                          // display all students in select form 
+                            $sql = "SELECT s.s_first_name, s.s_middle_name, s.s_last_name, s.s_id_number, ga.general_acadyear_id, ga.general_student_gradelevel, s.student_id FROM general_average ga 
+                            JOIN student s 
+                            ON s.student_id = ga.general_student_id 
+                            WHERE ga.general_acadyear_id = '$gen_sy'
+                            AND ga.general_remarks = 'Passed'
+                            ";
+                            $result = mysqli_query($conn,$sql);
+                            while($row = mysqli_fetch_assoc($result)) {
+                              $checkSql = "SELECT * FROM student_ay WHERE studentID = '$row[student_id]' AND s_school_yearID = '$get_academic_year' ";
+                              $check = mysqli_query($conn,$checkSql);
+                               // hide all inserted students in select form 
+                                if(mysqli_num_rows($check) == 0) {
+                             ?>
+                              <option value="<?php echo $row['student_id'] ?>"><?php echo $row['s_id_number']?> - <?php echo $row['s_first_name']?> <?php echo $row['s_last_name']?> - <?php echo $row['general_student_gradelevel'] ?> </option>
+
+                          <?php } 
+                            }
+                          ?>
+                        </select>
+                      </div>
+                  </div>
+
+                  <?php 
+                  //var_dump($sql);
+
+
+                  ?>
+ 
+                 <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="grade_level">Select A Grade Level</label>
+                        <select class="form-control" name="student_ay_gradelevel" id="add_student_ay_gradelevel">
+                            <option hidden value="">Select A Grade Level:</option>
+                            <option value="Kinder">Kindergarten</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="Prep">Preparatory</option>
+                            <option value="G1">Grade 1</option>
+                            <option value="G2">Grade 2</option>
+                            <option value="G3">Grade 3</option>
+                            <option value="G4">Grade 4</option>
+                            <option value="G5">Grade 5</option>
+                            <option value="G6">Grade 6</option>
+                            <option value="G7">Grade 7</option>
+                            <option value="G8">Grade 8</option>
+                            <option value="G9">Grade 9</option>
+                            <option value="G10">Grade 10</option>
+                        </select>
+                     </div>
+                  </div> 
+
+               <!--    <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="student_type">Select A Student Type</label>
+                        <select class="form-control" name="student_ay_studenttype" id="add_student_ay_studenttype" >
+                            <option hidden value="">Select A Student Type:</option>
+                            <option value="New">New</option>
+                            <option value="Old">Old</option>
+                         </select>
+                       </div>
+                    </div> -->
+                </div>
+
+
+                  <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-outline-primary" name="addContinueStudentSubmit">SUBMIT</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
+                  </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+  <!-- Modals End -->
+
+   <!-- Modals Student View -->
+
+         <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false"> -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="addfailedStudentAy">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add Failed Student</h5>
+              </div>
+
+
+ 
+                <form method="POST" id="formStudentAy" action="../../controllers/view-academic-year.php">
+                <div class="card-body">
+
+                  <input type="hidden" name="school_year" value="<?php echo $get_academic_year ?>">
+          
+                  <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="school_year">Select A Student</label>
+                        <!-- <input type="text" class="validate form-control" id="school_year" placeholder="e.g 2019-2020" name="school_year"  pattern="[a-zA-Z0-9-]+"> -->
+                        <select class="form-control" name="student_ay_studentID" id="add_student_ay_student">
+                          <?php 
+                          $gen_sy = ($get_academic_year-1);
+                      
+                          // display all students in select form 
+                            $sql = "SELECT s.s_first_name, s.s_middle_name, s.s_last_name, s.s_id_number, ga.general_acadyear_id, ga.general_student_gradelevel, s.student_id FROM general_average ga 
+                            JOIN student s 
+                            ON s.student_id = ga.general_student_id 
+                            WHERE ga.general_acadyear_id = '$gen_sy'
+                            AND ga.general_remarks = 'Failed'
+                            ";
+                            $result = mysqli_query($conn,$sql);
+                            while($row = mysqli_fetch_assoc($result)) {
+                              $checkSql = "SELECT * FROM student_ay WHERE studentID = '$row[student_id]' AND s_school_yearID = '$get_academic_year' ";
+                              $check = mysqli_query($conn,$checkSql);
+                               // hide all inserted students in select form 
+                                if(mysqli_num_rows($check) == 0) {
+                             ?>
+                              <option value="<?php echo $row['student_id'] ?>"><?php echo $row['s_id_number']?> - <?php echo $row['s_first_name']?> <?php echo $row['s_last_name']?> - <?php echo $row['general_student_gradelevel'] ?> </option>
+
+                          <?php } 
+                            }
+                          ?>
+                        </select>
+                      </div>
+                  </div>
+
+                  <?php 
+                //  var_dump($sql);
+
+
+                  ?>
+ 
+                 <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="grade_level">Select A Grade Level</label>
+                        <select class="form-control" name="student_ay_gradelevel" id="add_student_ay_gradelevel">
+                            <option hidden value="">Select A Grade Level:</option>
+                            <option value="Kinder">Kindergarten</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="Prep">Preparatory</option>
+                            <option value="G1">Grade 1</option>
+                            <option value="G2">Grade 2</option>
+                            <option value="G3">Grade 3</option>
+                            <option value="G4">Grade 4</option>
+                            <option value="G5">Grade 5</option>
+                            <option value="G6">Grade 6</option>
+                            <option value="G7">Grade 7</option>
+                            <option value="G8">Grade 8</option>
+                            <option value="G9">Grade 9</option>
+                            <option value="G10">Grade 10</option>
+                        </select>
+                     </div>
+                  </div> 
+
+               <!--    <div class="form-row">
+                      <div class="form-group col-12">
+                        <label for="student_type">Select A Student Type</label>
+                        <select class="form-control" name="student_ay_studenttype" id="add_student_ay_studenttype" >
+                            <option hidden value="">Select A Student Type:</option>
+                            <option value="New">New</option>
+                            <option value="Old">Old</option>
+                         </select>
+                       </div>
+                    </div> -->
+                </div>
+
+
+                  <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-outline-primary" name="addFailedStudentSubmit">SUBMIT</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">CLOSE</button>
                   </div>
 

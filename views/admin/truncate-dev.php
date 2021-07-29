@@ -205,6 +205,37 @@
                         Student Grade <span class="badge badge-success"><?php echo $numRowsCountSG ?></span>
                       </a>
 
+                           <?php
+
+                      $sqlCountGA = "SELECT * FROM general_average";
+                      $resultCountGA = mysqli_query($conn,$sqlCountGA);
+                      $numRowsCountGA = mysqli_num_rows($resultCountGA);
+                      ?>
+                      <a href="../../controllers/truncate-dev.php?ga=" class="list-group-item list-group-item-action">
+                        Student General Average <span class="badge badge-success"><?php echo $numRowsCountGA ?></span>
+                      </a>
+
+                           <?php
+
+                      $sqlCountES = "SELECT * FROM student WHERE enroll_status = 'Old' ";
+                      $resultCountES = mysqli_query($conn,$sqlCountES);
+                      $numRowsCountES = mysqli_num_rows($resultCountES);
+                      ?>
+                      <a href="../../controllers/truncate-dev.php?es=" class="list-group-item list-group-item-action">
+                        Set Student Enroll Status To New <span class="badge badge-success"><?php echo $numRowsCountES ?></span>
+                      </a>
+
+                      <?php
+
+                      $sqlCountCGL = "SELECT * FROM calculate_grade WHERE calculategrade_isLock = '1' ";
+                      $resultCountCGL = mysqli_query($conn,$sqlCountCGL);
+                      $numRowsCountCGL = mysqli_num_rows($resultCountCGL);
+                      ?>
+                      <a href="../../controllers/truncate-dev.php?cgl=" class="list-group-item list-group-item-action">
+                        Set Calculate Grade To Not Done <span class="badge badge-success"><?php echo $numRowsCountCGL ?></span>
+                      </a>
+
+
 
                     </div>
                   </div>
