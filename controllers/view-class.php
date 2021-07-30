@@ -42,7 +42,7 @@ foreach($cstud_studentID AS $cs1) {
 
   if($result){
     $str="Added Teacher Account";
-        header("Location:../views/admin/view-class.php?c=$classID&s=".$str);
+        header("Location:../views/admin/view-class.php?c=$classID&ay=$academic_yearID&s=".$str);
     }else{
         $str="Error Adding teacher";
         /*echo"<pre>";
@@ -331,6 +331,7 @@ function removeClassStudent(){
   $classStudentID = $_POST['classStudentID'];
   $classID = $_POST['classID'];
   $studentID = $_POST['cstud_studentID'];
+  $ay = $_POST['ay'];
 
   $sql = "DELETE FROM class_student WHERE `class_student_id` = '$classStudentID' ";
   $result = mysqli_query($conn, $sql);
@@ -353,7 +354,7 @@ function removeClassStudent(){
  
   if($result == true){
       $str = "You Have Permanently Deleted The Teacher Account";
-      header("Location:../views/admin/view-class.php?c=$classID&f=".$str);
+      header("Location:../views/admin/view-class.php?c=$classID&ay=$ay&f=".$str);
     }else{
       echo "ERROR!" .mysqli_error($conn);
     }

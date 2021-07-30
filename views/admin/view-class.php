@@ -97,6 +97,8 @@
               <?php 
 
               $getClass = $_GET['c'];
+                 // newly created ay
+                          $getClassAY = $_GET['ay'];
 
               $sqlGetClass = "SELECT * FROM class c 
               JOIN academic_year ay 
@@ -305,10 +307,14 @@
                           ON s.student_id = cstud.cstud_studentID
                           JOIN academic_year ay 
                           ON ay.academic_year_id = cstud.cstud_academicyearID
-                          WHERE cstud.cstud_classID = '$getClass' AND 
+                          WHERE cstud.cstud_classID = '$getClass' 
+                          AND cstud.cstud_academicyearID = '$getClassAY' 
 
                           ";
                           $result = mysqli_query($conn,$sql);
+
+                   
+
                           if(mysqli_num_rows($result) > 0) {
                               $count = 1;
                               while($row = mysqli_fetch_assoc($result)) {
@@ -411,6 +417,7 @@
                           <td colspan="7" class="text-dark"> Monday </td>
                         </tr>
                         <?php
+
                           $sqlMonday = "SELECT * FROM class_subject csubj
                           JOIN class c
                           ON c.class_id = csubj.csubj_classID
@@ -421,7 +428,6 @@
                           JOIN subject s
                           ON s.subject_id = csubj.csubj_subjectID
                           WHERE csubj.class_subject_day = 'Monday'
-                          AND csubj.csubj_classID = '$getClass'
                           ";
                           $resultMonday = mysqli_query($conn,$sqlMonday);
                            if(mysqli_num_rows($resultMonday) > 0) {
@@ -773,8 +779,7 @@
                             <select class="form-control js-example-basic-single" name="cstud_studentID[]" id="add_cstud_student" multiple="multiple">
                           <?php 
 
-                          // newly created ay
-                          $getClassAY = $_GET['ay'];
+                       
 
                           // display all students in select form 
                             $sqlSelectStudent = "SELECT s_ay.s_school_yearID,s_ay.studentID,s_ay.s_grade_level,s_ay.student_type,s.student_id,s.s_id_number,s.s_first_name,s.s_last_name FROM student_ay s_ay
@@ -1035,6 +1040,8 @@
                 <input type="hidden" id="remove_class_student_id" name="classStudentID">
                 <input type="hidden" id="remove_class_student_class_id" name="classID">
                 <input type="hidden" id="remove_class_student_class_studentID" name="cstud_studentID">
+                <input type="hidden" id="remove_class_student_academic_yearID" name="ay">
+
 
                   <div class="card-body">
                     <div class="container">
@@ -1363,6 +1370,7 @@ $(document).ready(function() {
                 $('#remove_class_student_id').val(data.class_student_id);
                 $('#remove_class_student_class_id').val(data.cstud_classID);
                 $('#remove_class_student_class_studentID').val(data.cstud_studentID);
+                $('#remove_class_student_academic_yearID').val(data.cstud_academicyearID);
                 $('#removeClassStudent').modal('show');
              }
         })  
