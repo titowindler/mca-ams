@@ -75,32 +75,11 @@ function insertClassSubject() {
   $class_subject_end_time        = $_POST['class_subject_end_time'];
   $class_subject_teacher         = $_POST['class_subject_teacher'];
   $teacher_status                = '0';
-
-$sqlCheckDay = "SELECT * FROM class_subject WHERE csubj_classID = '$classID' AND csubj_teacherID = '$class_subject_teacher' AND csubj_academicyearID = '$academic_yearID' AND class_subject_day = '$class_subject_day' AND class_subject_start = '$class_subject_start_time' AND class_subject_end = '$class_subject_end_time' AND csubj_subjectID = '$class_subjectID' ";
-$resultCheckDay = mysqli_query($conn,$sqlCheckDay);
-$checkDayNumRows = mysqli_num_rows($resultCheckDay);
-
-$sqlCheckSubj = "SELECT * FROM class_subject WHERE csubj_classID = '$classID' AND csubj_teacherID = '$class_subject_teacher' AND csubj_academicyearID = '$academic_yearID' AND class_subject_day = '$class_subject_day' AND class_subject_start = '$class_subject_start_time' AND class_subject_end = '$class_subject_end_time' ";
-$resultCheckSubj = mysqli_query($conn,$sqlCheckSubj);
-$CheckSubjNumRows = mysqli_num_rows($resultCheckSubj); 
-
-$time_start = strtotime($class_subject_start_time);
-$time_end = strtotime($class_subject_end_time);
-
-if($time_start <= $time_end) {
-  if($checkDayNumRows < 1) {
-    if($CheckSubjNumRows < 1) {
+  
   $sql = "INSERT INTO class_subject (class_subject_id,csubj_classID,csubj_teacherID,class_subject_teacherStatus,csubj_academicyearID,class_subject_day,csubj_subjectID,class_subject_start,class_subject_end,isLockClassSubject) VALUES
-  (NULL,'$classID','$class_subject_teacher','$teacher_status','$academic_yearID','$class_subject_day','$class_subjectID','$class_subject_start_time','$class_subject_end_time',1) ";
+  (NULL,'$classID','$class_subject_teacher','$teacher_status','$academic_yearID','$class_subject_day','$class_subjectID','$class_subject_start_time','$class_subject_end_time',1)";
   $result = mysqli_query($conn,$sql);
-    } else {
-      $str = "This Class Subject Time Is Already Taken";
-      header("Location:../views/admin/view-class.php?c=$classID&f=".$str);
-    }
-  } else {
-    $str = "Cannot Add The Same Time Slot";
-    header("Location:../views/admin/view-class.php?c=$classID&f=".$str);
-  }
+
 
   // notif message
   $sqlNotifClass = "SELECT * FROM class 
@@ -131,8 +110,7 @@ if($time_start <= $time_end) {
   ";
   $sqlNotifClassTeacher = mysqli_query($conn,$sqlNotifClassTeacher);
 
-
-
+  //
 
   $sqlStudentGrade = "
     SELECT * 
@@ -143,8 +121,8 @@ if($time_start <= $time_end) {
   ";
   $resultsqlStudentGrade = mysqli_query($conn,$sqlStudentGrade);
   $num_rows = mysqli_num_rows($resultsqlStudentGrade);
-
-  if($num_rows <= 1) {
+  
+if($num_rows < 1) {
  
   // student grade
   $sqlStudent = "
@@ -154,7 +132,7 @@ if($time_start <= $time_end) {
   ON class_subject.csubj_classID = class_student.cstud_classID 
   WHERE class_student.cstud_classID = '$classID' AND class_subject.csubj_subjectID = $class_subjectID
   ";
-  $resultStudent = mysqli_query($conn,$sqlStudent); 
+ $resultStudent = mysqli_query($conn,$sqlStudent); 
 
 
  // // student calculate grade this is the - score for each student
@@ -204,41 +182,35 @@ $sqlPercentageScore2 = "
  //  ";
  // $resultPercentageScore = mysqli_query($conn,$sqlPercentageScore);
 
- }
+
+} 
 
   if($result){
     $str="Added Teacher Account";
       //echo "SUCCESS";
       //var_dump($conn);
       //var_dump($sqlPercentageScore);
-      $str = "Successfully Added A Class Subject";
       header("Location:../views/admin/view-class.php?c=$classID&s=".$str);
-      
     }else{
         
     //  echo "ERROR";
-        //$str="Cannot Add The Same Time Slot";
+        $str="Error Adding teacher";
         /*echo"<pre>";
         print_r($_POST);  
         echo"</pre>";
         echo $createGrade;
         echo $result;
         echo("Error description: " . mysqli_error($conn));
-  
-        exit();*/       
-        header("Location:../views/admin/view-class.php?c=$classID&f=".$str);
-       
-      }
-    } else {
-      //echo "DILI NA PWEDE";
-     $str = "Successfully Added A Class Subject";
-     header("Location:../views/admin/view-class.php?c=$classID&s=".$str);
-      
-    } 
+    
+
+        exit();*/
+
+    header("Location:../views/admin/view-academic-year.php?sy=$school_year&f=".$str);
+    }
   } else {
-    $str = "Cannot Add Time Greater than End Time";
-    header("Location:../views/admin/view-class.php?c=$classID&f=".$str);
-  }
+      //echo "DILI NA PWEDE";
+     header("Location:../views/admin/view-class.php?c=$classID");
+  } 
  
 }
 
