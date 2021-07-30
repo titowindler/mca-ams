@@ -190,7 +190,7 @@
                             <?php } ?>
                           </td>
                           <td>
-                            <a href="view-class.php?c=<?php echo $row['class_id'] ?>" class="btn btn-info btn-sm"><i class="fas fa-box-open"></i> VIEW</a>
+                            <a href="view-class.php?c=<?php echo $row['class_id'] ?>&ay=<?php echo $row['academic_year'] ?>" class="btn btn-info btn-sm"><i class="fas fa-box-open"></i> VIEW</a>
                           <?php  if($row['set_academic_year'] == '1') { ?>
                            <button class="btn btn-primary btn-sm updateClass" id='<?php echo $row['class_id']?>'><i class="fas fa-edit"></i> UPDATE</button>
                            <button class="btn btn-danger btn-sm deleteClass"  id='<?php echo $row['class_id'] ?>'><i class="fas fa-trash"></i> DELETE</button> 

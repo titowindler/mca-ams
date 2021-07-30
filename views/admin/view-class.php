@@ -296,6 +296,8 @@
                         </thead>
                         <tbody>
                         <?php
+
+                        
                           $sql = "SELECT * FROM class_student cstud
                           JOIN class c
                           ON c.class_id = cstud.cstud_classID
@@ -303,7 +305,8 @@
                           ON s.student_id = cstud.cstud_studentID
                           JOIN academic_year ay 
                           ON ay.academic_year_id = cstud.cstud_academicyearID
-                          WHERE cstud.cstud_classID = '$getClass'
+                          WHERE cstud.cstud_classID = '$getClass' AND 
+
                           ";
                           $result = mysqli_query($conn,$sql);
                           if(mysqli_num_rows($result) > 0) {
@@ -769,12 +772,17 @@
                         <label for="student_cstud">Select A Student</label>
                             <select class="form-control js-example-basic-single" name="cstud_studentID[]" id="add_cstud_student" multiple="multiple">
                           <?php 
+
+                          // newly created ay
+                          $getClassAY = $_GET['ay'];
+
                           // display all students in select form 
                             $sqlSelectStudent = "SELECT s_ay.s_school_yearID,s_ay.studentID,s_ay.s_grade_level,s_ay.student_type,s.student_id,s.s_id_number,s.s_first_name,s.s_last_name FROM student_ay s_ay
                             JOIN student s 
                             ON s.student_id = s_ay.studentID
                             WHERE s.status = '1'
                             AND s_ay.s_grade_level = '$class_gradelevel'
+                            AND s_ay.s_school_yearID = '$getClassAY'
                             ";
                             $result = mysqli_query($conn,$sqlSelectStudent);
                             while($row = mysqli_fetch_assoc($result)) {
